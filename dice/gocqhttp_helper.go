@@ -87,7 +87,8 @@ func RandString(len int) string {
 //"Apple Watch"	Apple Watch
 
 func GenerateDeviceJsonIOS(protocol int) (string, []byte, error) {
-	rand.Seed(time.Now().Unix())
+	// 不应反复reseed
+	// rand.Seed(time.Now().Unix())
 	bootId := uuid.New()
 	imei := goluhn.Generate(15) // 注意，这个imei是完全胡乱创建的，并不符合imei规则
 	androidId := fmt.Sprintf("%X", rand.Uint64())
@@ -137,7 +138,7 @@ func GenerateDeviceJsonIOS(protocol int) (string, []byte, error) {
 }
 
 func GenerateDeviceJsonAndroidWatch(protocol int) (string, []byte, error) {
-	rand.Seed(time.Now().Unix())
+	// rand.Seed(time.Now().Unix())
 	bootId := uuid.New()
 	imei := goluhn.Generate(15) // 注意，这个imei是完全胡乱创建的，并不符合imei规则
 	androidId := fmt.Sprintf("%X", rand.Uint64())
@@ -179,7 +180,7 @@ func GenerateDeviceJsonAndroidWatch(protocol int) (string, []byte, error) {
 }
 
 func GenerateDeviceJsonAllRandom(protocol int) (string, []byte, error) {
-	rand.Seed(time.Now().Unix())
+	// rand.Seed(time.Now().Unix())
 	bootId := uuid.New()
 	imei := goluhn.Generate(15) // 注意，这个imei是完全胡乱创建的，并不符合imei规则
 	androidId := fmt.Sprintf("%X", rand.Uint64())
@@ -431,15 +432,15 @@ func generateNewSignServerConfigStr(config *SignServerConfig) string {
   # 如果遇到 登录 45 错误, 或者发送信息风控的话需要填入一个或多个服务器
   # 不建议设置过多，设置主备各一个即可，超过 5 个只会取前五个
   # 示例:
-  # sign-servers: 
+  # sign-servers:
   #   - url: 'http://127.0.0.1:8080' # 本地签名服务器
   #     key: "114514"  # 相应 key
   #     authorization: "-"   # authorization 内容, 依服务端设置
   #   - url: 'https://signserver.example.com' # 线上签名服务器
-  #     key: "114514"  
-  #     authorization: "-"   
+  #     key: "114514"
+  #     authorization: "-"
   #   ...
-  # 
+  #
   # 服务器可使用docker在本地搭建或者使用他人开放的服务
 %s
 

@@ -3,12 +3,12 @@ package dice
 import (
 	"errors"
 	"fmt"
-	"math/rand"
 	"os"
 	"path/filepath"
 	"runtime/debug"
 	"sealdice-core/dice/logger"
 	"sealdice-core/dice/model"
+	"sealdice-core/dice/rng"
 	"strconv"
 	"strings"
 	"time"
@@ -626,19 +626,11 @@ func (d *Dice) GameSystemTemplateAdd(tmpl *GameSystemTemplate) bool {
 }
 
 func DiceRoll(dicePoints int) int {
-	if dicePoints <= 0 {
-		return 0
-	}
-	val := rand.Int()%dicePoints + 1
-	return val
+	return rng.SelectedRNG.DiceRoll(dicePoints)
 }
 
 func DiceRoll64(dicePoints int64) int64 {
-	if dicePoints == 0 {
-		return 0
-	}
-	val := rand.Int63()%dicePoints + 1
-	return val
+	return rng.SelectedRNG.DiceRoll64(dicePoints)
 }
 
 func CrashLog() {
